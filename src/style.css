@@ -65,3 +65,7 @@ section p {
 section p span {
 	font-weight: bold;
 }
+
+.total-section {
+	margin-top: 2em;
+}
