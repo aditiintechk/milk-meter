@@ -1,13 +1,19 @@
 let totalCost = 0
+let groundArr = []
+let firstArr = []
+let secondArr = []
 
 document.addEventListener('DOMContentLoaded', function () {
-	generateCalendar('Ground', 1)
-	generateCalendar('First', 2)
-	generateCalendar('Second', 1.5)
+	generateCalendar('Ground')
+	generateCalendar('First')
+	generateCalendar('Second')
+
+	costPerMonth('Ground', groundArr.length, 1)
+	costPerMonth('First', firstArr.length, 2)
+	costPerMonth('Second', secondArr.length, 1.5)
 })
 
-function generateCalendar(floorName, dailyLimit) {
-	const milkAmountPerLitre = 48
+function generateCalendar(floorName) {
 	let calendarEl = document.getElementById(`calendar${floorName}`)
 	let calendar = new FullCalendar.Calendar(calendarEl, {
 		initialView: 'dayGridMonth',
@@ -15,7 +21,6 @@ function generateCalendar(floorName, dailyLimit) {
 
 	calendar.render()
 	calendar.on('dateClick', function (info) {
-		console.log('clicked on ' + info.dateStr)
 		let currentColor = info.dayEl.style.backgroundColor
 
 		let colorGreen = 'rgb(151, 173, 109)'
@@ -23,15 +28,38 @@ function generateCalendar(floorName, dailyLimit) {
 
 		if (currentColor === '' || currentColor === colorDefault) {
 			info.dayEl.style.backgroundColor = colorGreen
+			currentColor = colorGreen
 		} else if (currentColor === colorGreen) {
 			info.dayEl.style.backgroundColor = colorDefault
+			currentColor = colorDefault
 		}
-	})
 
+		if (floorName === 'Ground' && currentColor === colorGreen) {
+			groundArr.push(info.dateStr && currentColor === colorGreen)
+		} else if (floorName === 'First') {
+			firstArr.push(info.dateStr)
+		} else if (floorName === 'Second' && currentColor === colorGreen) {
+			secondArr.push(info.dateStr)
+		}
+
+		costPerMonth('Ground', groundArr.length, 1)
+		costPerMonth('First', firstArr.length, 2)
+		costPerMonth('Second', secondArr.length, 1.5)
+	})
+}
+
+function costPerMonth(floorName, daysDeducted, dailyLimit) {
+	const spanDisplayEl = document.getElementById(`cost${floorName}`)
+	const milkAmountPerLitre = 48
 	const currentDate = moment()
 	const daysInMonth = currentDate.daysInMonth()
-	console.log('Number of days in the current month:', daysInMonth)
+	let initialCostOfCurrentMonth =
+		daysInMonth * dailyLimit * milkAmountPerLitre
+	spanDisplayEl.textContent = initialCostOfCurrentMonth
 
-	let costOfCurrentMonth = daysInMonth * dailyLimit * milkAmountPerLitre
-	console.log(costOfCurrentMonth)
+	const daysInMonthAfterDeduction = currentDate.daysInMonth() - daysDeducted
+	let costOfCurrentMonth =
+		daysInMonthAfterDeduction * dailyLimit * milkAmountPerLitre
+	// console.log(costOfCurrentMonth)
+	spanDisplayEl.textContent = costOfCurrentMonth
 }

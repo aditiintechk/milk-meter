@@ -28,7 +28,9 @@ h3 {
 	text-align: center;
 }
 
-.ground-floor {
+.ground-floor,
+.first-floor,
+.second-floor {
 	margin: 3em 0 1em;
 }
 
@@ -53,4 +55,12 @@ h3 {
 	& .fc-daygrid-day-number {
 		font-size: 1.3em;
 	}
+}
+
+section p {
+	font-size: 1.5rem;
+}
+
+section p span {
+	font-weight: bold;
 }
