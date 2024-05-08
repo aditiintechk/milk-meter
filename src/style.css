@@ -1,0 +1,56 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+:root {
+	--fc-border-color: #000;
+	--fc-today-bg-color: #ddbdc3;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+	margin: 0;
+}
+
+h3 {
+	margin-top: 1rem;
+}
+
+.container {
+	max-width: 500px;
+	margin: 2em auto;
+	text-align: center;
+}
+
+.ground-floor {
+	margin: 3em 0 1em;
+}
+
+.floor-title {
+	border: 1px solid #000;
+	border-radius: 5px;
+	width: fit-content;
+	margin: 2.5em auto 1em;
+	padding: 0.2em 0.4em;
+}
+
+.floor {
+	margin: 1em;
+}
+
+.fc {
+	font-size: 0.9em;
+	cursor: pointer;
+	& table {
+		font-size: 0.9em;
+	}
+	& .fc-daygrid-day-number {
+		font-size: 1.3em;
+	}
+}

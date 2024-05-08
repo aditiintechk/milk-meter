@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+
+    <link rel="stylesheet" href="./src/style.css">
+    <title>Milk Meter</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Milk Meter</h1>
+            <h3>Milk Rate Today: ₹48</h3>
+        </header>
+
+        <main>
+            <section class="ground-floor">
+                <h2 class="floor-title">Ground Floor</h2>
+                <div class="floor" id="calendarGround"></div>
+            </section>
+
+            <section class="first-floor">
+                <h2 class="floor-title">First Floor</h2>
+                <div class="floor" id="calendarFirst"></div>
+            </section>
+
+            <section class="second-floor">
+                <h2 class="floor-title">Second Floor</h2>
+                <div class="floor" id="calendarSecond"></div>
+            </section>
+        </main>
+    </div>
+    <script src="./src/app.js" type="module"></script>
+</body>
+
+</html>
