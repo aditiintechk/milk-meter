@@ -34,14 +34,74 @@ function generateCalendar(floorName) {
 			currentColor = colorDefault
 		}
 
-		if (floorName === 'Ground' && currentColor === colorGreen) {
-			groundArr.push(info.dateStr && currentColor === colorGreen)
+		if (floorName === 'Ground') {
+			if (currentColor === colorGreen) {
+				let result = groundArr.find(
+					(item) => item.selectedDate === info.dateStr
+				)
+				if (result === undefined) {
+					groundArr.push({
+						selectedDate: info.dateStr,
+						tileColor: currentColor,
+					})
+				}
+			} else if (currentColor === colorDefault) {
+				let result = groundArr.find(
+					(item) => item.selectedDate === info.dateStr
+				)
+				if (result) {
+					groundArr = groundArr.filter(
+						(item) => item.selectedDate !== info.dateStr
+					)
+				}
+			}
 		} else if (floorName === 'First') {
-			firstArr.push(info.dateStr)
-		} else if (floorName === 'Second' && currentColor === colorGreen) {
-			secondArr.push(info.dateStr)
+			if (currentColor === colorGreen) {
+				let result = firstArr.find(
+					(item) => item.selectedDate === info.dateStr
+				)
+				if (result === undefined) {
+					firstArr.push({
+						selectedDate: info.dateStr,
+						tileColor: currentColor,
+					})
+				}
+			} else if (currentColor === colorDefault) {
+				let result = firstArr.find(
+					(item) => item.selectedDate === info.dateStr
+				)
+				if (result) {
+					firstArr = firstArr.filter(
+						(item) => item.selectedDate !== info.dateStr
+					)
+				}
+			}
+		} else if (floorName === 'Second') {
+			if (currentColor === colorGreen) {
+				let result = secondArr.find(
+					(item) => item.selectedDate === info.dateStr
+				)
+				if (result === undefined) {
+					secondArr.push({
+						selectedDate: info.dateStr,
+						tileColor: currentColor,
+					})
+				}
+			} else if (currentColor === colorDefault) {
+				let result = secondArr.find(
+					(item) => item.selectedDate === info.dateStr
+				)
+				if (result) {
+					secondArr = secondArr.filter(
+						(item) => item.selectedDate !== info.dateStr
+					)
+				}
+			}
 		}
 
+		console.log(groundArr)
+		console.log(firstArr)
+		console.log(secondArr)
 		costPerMonth('Ground', groundArr.length, 1)
 		costPerMonth('First', firstArr.length, 2)
 		costPerMonth('Second', secondArr.length, 1.5)
@@ -60,6 +120,59 @@ function costPerMonth(floorName, daysDeducted, dailyLimit) {
 	const daysInMonthAfterDeduction = currentDate.daysInMonth() - daysDeducted
 	let costOfCurrentMonth =
 		daysInMonthAfterDeduction * dailyLimit * milkAmountPerLitre
-	// console.log(costOfCurrentMonth)
 	spanDisplayEl.textContent = costOfCurrentMonth
 }
+
+/* function updateArr(
+	currentArr,
+	currentColor,
+	currentDate,
+	colorGreen,
+	colorDefault
+) {
+	if (currentColor === colorGreen) {
+		let result = currentArr.find(
+			(item) => item.selectedDate === currentDate
+		)
+		if (result === undefined) {
+			currentArr.push({
+				selectedDate: currentDate,
+				tileColor: currentColor,
+			})
+		}
+	} else if (currentColor === colorDefault) {
+		let result = currentArr.find(
+			(item) => item.selectedDate === currentDate
+		)
+		if (result) {
+			currentArr = currentArr.filter(
+				(item) => item.selectedDate !== currentDate
+			)
+		}
+	}
+} */
+
+/* if (floorName === 'Ground')
+    updateArr(
+        groundArr,
+        currentColor,
+        info.dateStr,
+        colorGreen,
+        colorDefault
+    )
+else if (floorName === 'First')
+    updateArr(
+        firstArr,
+        currentColor,
+        info.dateStr,
+        colorGreen,
+        colorDefault
+    )
+else if (floorName === 'Second')
+    updateArr(
+        secondArr,
+        currentColor,
+        info.dateStr,
+        colorGreen,
+        colorDefault
+    ) */
