@@ -38,7 +38,6 @@ function generateCalendar(floorName) {
 			info.dayEl.style.backgroundColor = colorGreen
 			currentColor = colorGreen
 		} else if (currentColor === colorGreen) {
-			console.log(currentDate === dateNow)
 			if (currentDate === dateNow) {
 				info.dayEl.style.backgroundColor = colorPink
 				currentColor = colorPink
@@ -54,7 +53,8 @@ function generateCalendar(floorName) {
 				currentColor,
 				currentDate,
 				colorGreen,
-				colorDefault
+				colorDefault,
+				colorPink
 			)
 		else if (floorName === 'First')
 			firstArr = updateArr(
@@ -62,7 +62,8 @@ function generateCalendar(floorName) {
 				currentColor,
 				currentDate,
 				colorGreen,
-				colorDefault
+				colorDefault,
+				colorPink
 			)
 		else if (floorName === 'Second')
 			secondArr = updateArr(
@@ -70,7 +71,8 @@ function generateCalendar(floorName) {
 				currentColor,
 				currentDate,
 				colorGreen,
-				colorDefault
+				colorDefault,
+				colorPink
 			)
 
 		costPerMonth('Ground', groundArr.length, 1)
@@ -110,7 +112,8 @@ function updateArr(
 	currentColor,
 	currentDate,
 	colorGreen,
-	colorDefault
+	colorDefault,
+	colorPink
 ) {
 	if (currentColor === colorGreen) {
 		let result = currentArr.find(
@@ -123,6 +126,15 @@ function updateArr(
 			})
 		}
 	} else if (currentColor === colorDefault) {
+		let result = currentArr.find(
+			(item) => item.selectedDate === currentDate
+		)
+		if (result) {
+			currentArr = currentArr.filter(
+				(item) => item.selectedDate !== currentDate
+			)
+		}
+	} else if (currentColor === colorPink) {
 		let result = currentArr.find(
 			(item) => item.selectedDate === currentDate
 		)
