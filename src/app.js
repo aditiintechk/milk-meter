@@ -6,6 +6,10 @@ let secondArr = []
 const dateNow = new Date().toISOString().slice(0, 10)
 
 document.addEventListener('DOMContentLoaded', function () {
+	groundArr = loadFloorData('Ground')
+	firstArr = loadFloorData('First')
+	secondArr = loadFloorData('Second')
+
 	generateCalendar('Ground')
 	generateCalendar('First')
 	generateCalendar('Second')
@@ -15,6 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	costPerMonth('Second', secondArr.length, 1.5)
 })
 
+function loadFloorData(floorName) {
+	let storedData = localStorage.getItem(floorName)
+	return storedData ? JSON.parse(storedData) : []
+}
+
 function generateCalendar(floorName) {
 	let calendarEl = document.getElementById(`calendar${floorName}`)
 	let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -22,11 +31,28 @@ function generateCalendar(floorName) {
 	})
 
 	calendar.render()
+
+	let storedData = localStorage.getItem(floorName)
+	if (storedData) {
+		let datesData = JSON.parse(storedData)
+		datesData.forEach((dateInfo) => {
+			let dateStr = dateInfo.selectedDate
+
+			let dayElement = calendar.el.querySelector(
+				`.fc-day[data-date="${dateStr}"]`
+			)
+
+			if (dayElement) {
+				dayElement.style.backgroundColor = dateInfo.tileColor
+			}
+		})
+	}
+
 	calendar.on('dateClick', function (info) {
 		let currentColor = info.dayEl.style.backgroundColor
 		let currentDate = info.dateStr
 
-		let colorGreen = 'rgb(151, 173, 109)'
+		let colorMustard = 'rgb(218, 186, 100)'
 		let colorDefault = 'rgb(255, 255, 255)'
 		let colorPink = 'rgb(221, 189, 195)'
 
@@ -35,9 +61,9 @@ function generateCalendar(floorName) {
 			currentColor === colorDefault ||
 			currentColor === colorPink
 		) {
-			info.dayEl.style.backgroundColor = colorGreen
-			currentColor = colorGreen
-		} else if (currentColor === colorGreen) {
+			info.dayEl.style.backgroundColor = colorMustard
+			currentColor = colorMustard
+		} else if (currentColor === colorMustard) {
 			if (currentDate === dateNow) {
 				info.dayEl.style.backgroundColor = colorPink
 				currentColor = colorPink
@@ -47,33 +73,37 @@ function generateCalendar(floorName) {
 			}
 		}
 
-		if (floorName === 'Ground')
+		if (floorName === 'Ground') {
 			groundArr = updateArr(
 				groundArr,
 				currentColor,
 				currentDate,
-				colorGreen,
+				colorMustard,
 				colorDefault,
 				colorPink
 			)
-		else if (floorName === 'First')
+			localStorage.setItem(floorName, JSON.stringify(groundArr))
+		} else if (floorName === 'First') {
 			firstArr = updateArr(
 				firstArr,
 				currentColor,
 				currentDate,
-				colorGreen,
+				colorMustard,
 				colorDefault,
 				colorPink
 			)
-		else if (floorName === 'Second')
+			localStorage.setItem(floorName, JSON.stringify(firstArr))
+		} else if (floorName === 'Second') {
 			secondArr = updateArr(
 				secondArr,
 				currentColor,
 				currentDate,
-				colorGreen,
+				colorMustard,
 				colorDefault,
 				colorPink
 			)
+			localStorage.setItem(floorName, JSON.stringify(secondArr))
+		}
 
 		costPerMonth('Ground', groundArr.length, 1)
 		costPerMonth('First', firstArr.length, 2)
@@ -111,11 +141,11 @@ function updateArr(
 	currentArr,
 	currentColor,
 	currentDate,
-	colorGreen,
+	colorMustard,
 	colorDefault,
 	colorPink
 ) {
-	if (currentColor === colorGreen) {
+	if (currentColor === colorMustard) {
 		let result = currentArr.find(
 			(item) => item.selectedDate === currentDate
 		)
@@ -144,71 +174,5 @@ function updateArr(
 			)
 		}
 	}
-
 	return currentArr
 }
-
-/* if (floorName === 'Ground') {
-	if (currentColor === colorGreen) {
-		let result = groundArr.find(
-			(item) => item.selectedDate === currentDate
-		)
-		if (result === undefined) {
-			groundArr.push({
-				selectedDate: currentDate,
-				tileColor: currentColor,
-			})
-		}
-	} else if (currentColor === colorDefault) {
-		let result = groundArr.find(
-			(item) => item.selectedDate === currentDate
-		)
-		if (result) {
-			groundArr = groundArr.filter(
-				(item) => item.selectedDate !== currentDate
-			)
-		}
-	}
-} else if (floorName === 'First') {
-	if (currentColor === colorGreen) {
-		let result = firstArr.find(
-			(item) => item.selectedDate === currentDate
-		)
-		if (result === undefined) {
-			firstArr.push({
-				selectedDate: currentDate,
-				tileColor: currentColor,
-			})
-		}
-	} else if (currentColor === colorDefault) {
-		let result = firstArr.find(
-			(item) => item.selectedDate === currentDate
-		)
-		if (result) {
-			firstArr = firstArr.filter(
-				(item) => item.selectedDate !== currentDate
-			)
-		}
-	}
-} else if (floorName === 'Second') {
-	if (currentColor === colorGreen) {
-		let result = secondArr.find(
-			(item) => item.selectedDate === currentDate
-		)
-		if (result === undefined) {
-			secondArr.push({
-				selectedDate: currentDate,
-				tileColor: currentColor,
-			})
-		}
-	} else if (currentColor === colorDefault) {
-		let result = secondArr.find(
-			(item) => item.selectedDate === currentDate
-		)
-		if (result) {
-			secondArr = secondArr.filter(
-				(item) => item.selectedDate !== currentDate
-			)
-		}
-	}
-} */
