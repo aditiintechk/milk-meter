@@ -3,6 +3,8 @@ let groundArr = []
 let firstArr = []
 let secondArr = []
 
+const dateNow = new Date().toISOString().slice(0, 10)
+
 document.addEventListener('DOMContentLoaded', function () {
 	generateCalendar('Ground')
 	generateCalendar('First')
@@ -26,13 +28,24 @@ function generateCalendar(floorName) {
 
 		let colorGreen = 'rgb(151, 173, 109)'
 		let colorDefault = 'rgb(255, 255, 255)'
+		let colorPink = 'rgb(221, 189, 195)'
 
-		if (currentColor === '' || currentColor === colorDefault) {
+		if (
+			currentColor === '' ||
+			currentColor === colorDefault ||
+			currentColor === colorPink
+		) {
 			info.dayEl.style.backgroundColor = colorGreen
 			currentColor = colorGreen
 		} else if (currentColor === colorGreen) {
-			info.dayEl.style.backgroundColor = colorDefault
-			currentColor = colorDefault
+			console.log(currentDate === dateNow)
+			if (currentDate === dateNow) {
+				info.dayEl.style.backgroundColor = colorPink
+				currentColor = colorPink
+			} else {
+				info.dayEl.style.backgroundColor = colorDefault
+				currentColor = colorDefault
+			}
 		}
 
 		if (floorName === 'Ground')
@@ -63,6 +76,12 @@ function generateCalendar(floorName) {
 		costPerMonth('Ground', groundArr.length, 1)
 		costPerMonth('First', firstArr.length, 2)
 		costPerMonth('Second', secondArr.length, 1.5)
+
+		totalCost =
+			costPerMonth('Ground', groundArr.length, 1) +
+			costPerMonth('First', firstArr.length, 2) +
+			costPerMonth('Second', secondArr.length, 1.5)
+		document.getElementById('total-amount').textContent = totalCost
 	})
 }
 
@@ -82,6 +101,8 @@ function costPerMonth(floorName, daysDeducted, dailyLimit) {
 
 	totalCost += costOfCurrentMonth
 	document.getElementById('total-amount').textContent = totalCost
+
+	return costOfCurrentMonth
 }
 
 function updateArr(
