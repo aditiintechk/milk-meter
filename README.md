@@ -11,6 +11,7 @@ An app to calculate monthly milk amount for my aunt (Trust me, it gets complicat
 -   [x] Calculate the amount for each floor.
 -   [x] Calculate the total amount.
 -   [ ] Store the data in local storage.
+-   [ ] Convert this into a web app (PWA).
 
 ### Nice to Have - Features
 
