@@ -10,8 +10,8 @@ An app to calculate monthly milk amount for my aunt (Trust me, it gets complicat
 -   [x] Enable the option to pick anamoly dates, that is, days when milk is not bought/bought less than daily limit.
 -   [x] Calculate the amount for each floor.
 -   [x] Calculate the total amount.
--   [ ] Store the data in local storage.
--   [ ] Convert this into a web app (PWA).
+-   [x] Store the data in local storage.
+-   [x] Convert this into a web app (PWA).
 
 ### Nice to Have - Features
 
